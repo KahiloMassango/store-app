@@ -7,15 +7,45 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.example.store"
 
+    compileSdk = 35
+
     defaultConfig {
         applicationId = "com.example.store"
         versionCode = 1
         versionName = "1.0"
+        minSdk = 28
+        targetSdk = 35
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("mock") {
+            dimension = "environment"
+        }
+        create("prod") {
+            dimension = "environment"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
     buildTypes {
@@ -37,26 +67,9 @@ android {
 
 dependencies {
 
-    implementation(projects.core.data)
-    implementation(projects.core.model)
-    implementation(projects.core.ui)
-
-    implementation(projects.features.home)
-    implementation(projects.features.discover)
-    implementation(projects.features.cart)
-    implementation(projects.features.userprofile)
-    implementation(projects.features.authentication)
-    implementation(projects.features.productdetail)
-    implementation(projects.features.checkout)
-    implementation(projects.features.search)
-    implementation(projects.features.store)
-    implementation(projects.features.newaddress)
-    implementation(projects.features.shop)
-    implementation(projects.features.orders)
-
     implementation(libs.work.manager)
-
-
+    implementation(libs.hilt.work)
+    implementation(libs.datastore.preference)
     implementation(libs.androidx.splashscreen)
 
     implementation(libs.androidx.core.ktx)
@@ -79,6 +92,8 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp.logging.interceptor)
 
 
     // analytics
@@ -116,6 +131,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     testImplementation(libs.junit)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.mockk)
+    testImplementation(libs.androidx.core.test)
     testImplementation(libs.androidx.room.test)
     testImplementation(libs.kotlin.coroutines.test)
     androidTestImplementation(libs.androidx.junit)

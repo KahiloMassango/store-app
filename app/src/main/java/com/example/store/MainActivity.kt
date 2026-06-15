@@ -20,7 +20,6 @@ import com.example.store.navigation.App
 import com.example.store.navigation.AppViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 

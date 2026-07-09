@@ -23,9 +23,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.store" />
-                  <option name="mobileSdkAppId" value="1:746034806210:android:7b2547476c0e7c68e9ea5b" />
-                  <option name="projectId" value="my-device-bcfb2" />
-                  <option name="projectNumber" value="746034806210" />
+                  <option name="mobileSdkAppId" value="1:423348590513:android:efd51a2b634dc226188f90" />
+                  <option name="projectId" value="loja-das-coisas" />
+                  <option name="projectNumber" value="423348590513" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -19,8 +19,10 @@ interface AuthenticatedApiService {
     @GET("customer")
     suspend fun getAccountDetails(): Response<UserDtoRes>
 
-    @GET("auth/logout")
-    suspend fun logout()
+    @POST("auth/logout")
+    suspend fun logout(
+        @Body request: Map<String, String>
+    )
 
     @PUT("customer/update")
     suspend fun updateAccount(

@@ -87,8 +87,6 @@ dependencies {
     implementation(libs.androidx.material3.windowSizeClass)
 
 
-
-
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
@@ -100,7 +98,7 @@ dependencies {
     implementation(libs.firebase.analytics)
 
     // firebase cloud messaging
-   // implementation(libs.firebase.cloud.messaging)
+    implementation(libs.firebase.cloud.messaging)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

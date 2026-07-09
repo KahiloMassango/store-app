@@ -48,10 +48,18 @@ class UserNetworkDatasourceImpl(
         }
     }
 
-    override suspend fun logout(): Result<Unit> {
+    override suspend fun logout(
+        refreshToken: String,
+        deviceToken: String
+    ): Result<Unit> {
         return withContext(Dispatchers.IO) {
             try {
-                authenticatedApiService.logout()
+                authenticatedApiService.logout(
+                    request = mapOf(
+                        "refreshToken" to refreshToken,
+                        "deviceToken" to deviceToken
+                    )
+                )
                 Result.success(Unit)
             } catch (e: HttpException) {
                 val message = extractErrorMessage(e)

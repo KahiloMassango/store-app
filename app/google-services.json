@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "746034806210",
-    "project_id": "my-device-bcfb2",
-    "storage_bucket": "my-device-bcfb2.appspot.com"
+    "project_number": "423348590513",
+    "project_id": "loja-das-coisas",
+    "storage_bucket": "loja-das-coisas.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:746034806210:android:7b2547476c0e7c68e9ea5b",
+        "mobilesdk_app_id": "1:423348590513:android:efd51a2b634dc226188f90",
         "android_client_info": {
           "package_name": "com.example.store"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAxG38c7jbqwh1B3mQdARnCmuHEK7ISO28"
+          "current_key": "AIzaSyBFobAB5g5NDyNhhqz0MB3jAMHwl2g5O88"
         }
       ],
       "services": {

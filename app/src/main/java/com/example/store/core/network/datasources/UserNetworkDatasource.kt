@@ -11,7 +11,10 @@ interface UserNetworkDatasource {
 
     suspend fun createAccount(request: UserDtoReq): Result<Unit>
 
-    suspend fun logout(): Result<Unit>
+    suspend fun logout(
+         refreshToken: String,
+         deviceToken: String
+    ): Result<Unit>
 
     suspend fun getAccountDetails(): Result<UserDtoRes>
 

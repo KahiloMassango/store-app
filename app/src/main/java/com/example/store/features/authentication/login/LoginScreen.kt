@@ -52,8 +52,8 @@ fun LoginScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    var identifier by remember { mutableStateOf("customer@example.com") }
-    var password by remember { mutableStateOf("customer@example.com") }
+    var identifier by remember { mutableStateOf("customer@gmail.com") }
+    var password by remember { mutableStateOf("abc123") }
 
     LaunchedEffect(viewModel.isLoggedIn) {
         if (viewModel.isLoggedIn) {

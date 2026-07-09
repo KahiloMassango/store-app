@@ -9,8 +9,13 @@ import com.example.store.core.network.model.authentication.LoginDtoReq
 import com.example.store.core.network.model.user.UserDtoReq
 import com.example.store.core.network.model.user.UserUpdateDtoReq
 import com.example.store.core.network.model.user.asExternalModel
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.app
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.tasks.await
 
 class AccountRepositoryImpl(
     private val userNetworkDatasource: UserNetworkDatasource,
@@ -23,7 +28,14 @@ class AccountRepositoryImpl(
     }
 
     override suspend fun login(email: String, password: String): Result<Unit> {
-        return userNetworkDatasource.login(LoginDtoReq(email, password)).mapCatching {
+        val deviceToken = FirebaseMessaging.getInstance().token.await()
+
+        return userNetworkDatasource.login(LoginDtoReq(
+            identifier = email,
+            password = password,
+            deviceToken = deviceToken,
+            deviceType = "ANDROID"
+        )).mapCatching {
             tokenLocalDataSource.saveAccessToken(it.accessToken)
             tokenLocalDataSource.saveRefreshToken(it.refreshToken)
             val userResult = userNetworkDatasource.getAccountDetails()
@@ -35,7 +47,12 @@ class AccountRepositoryImpl(
     }
 
     override suspend fun logout(): Result<Unit> {
-        return userNetworkDatasource.logout()
+        val refreshToken = tokenLocalDataSource.getRefreshToken() ?: ""
+        val deviceToken = FirebaseMessaging.getInstance().token.await()
+        return userNetworkDatasource.logout(
+            refreshToken = refreshToken,
+            deviceToken = deviceToken
+        )
             .onSuccess {
                 tokenLocalDataSource.clearAllTokens()
                 userLocalDataSource.clearUserDetails()

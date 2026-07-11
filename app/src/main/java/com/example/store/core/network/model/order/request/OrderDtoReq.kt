@@ -2,7 +2,7 @@ package com.example.store.core.network.model.order.request
 
 data class OrderDtoReq(
     val subTotal: Int,
-    val deliveryFee: Int,
+    val deliveryFeeAmount: Double,
     val total: Int,
     val deliveryAddressName: String,
     val latitude: Double,

@@ -39,7 +39,7 @@ class OrderRepositoryImpl(
     ): Result<Order> {
         val request = OrderDtoReq(
             subTotal = subTotal,
-            deliveryFee = deliveryFee,
+            deliveryFeeAmount = deliveryFee.toDouble(),
             total = total,
             deliveryAddressName = deliveryAddressName,
             latitude = latitude,

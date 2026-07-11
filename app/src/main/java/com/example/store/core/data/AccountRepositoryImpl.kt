@@ -9,12 +9,8 @@ import com.example.store.core.network.model.authentication.LoginDtoReq
 import com.example.store.core.network.model.user.UserDtoReq
 import com.example.store.core.network.model.user.UserUpdateDtoReq
 import com.example.store.core.network.model.user.asExternalModel
-import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
-import com.google.firebase.app
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 
 class AccountRepositoryImpl(
@@ -30,12 +26,14 @@ class AccountRepositoryImpl(
     override suspend fun login(email: String, password: String): Result<Unit> {
         val deviceToken = FirebaseMessaging.getInstance().token.await()
 
-        return userNetworkDatasource.login(LoginDtoReq(
-            identifier = email,
-            password = password,
-            deviceToken = deviceToken,
-            deviceType = "ANDROID"
-        )).mapCatching {
+        return userNetworkDatasource.login(
+            LoginDtoReq(
+                identifier = email,
+                password = password,
+                deviceToken = deviceToken,
+                deviceType = "ANDROID"
+            )
+        ).mapCatching {
             tokenLocalDataSource.saveAccessToken(it.accessToken)
             tokenLocalDataSource.saveRefreshToken(it.refreshToken)
             val userResult = userNetworkDatasource.getAccountDetails()
@@ -49,14 +47,16 @@ class AccountRepositoryImpl(
     override suspend fun logout(): Result<Unit> {
         val refreshToken = tokenLocalDataSource.getRefreshToken() ?: ""
         val deviceToken = FirebaseMessaging.getInstance().token.await()
-        return userNetworkDatasource.logout(
+
+        userNetworkDatasource.logout(
             refreshToken = refreshToken,
             deviceToken = deviceToken
         )
-            .onSuccess {
-                tokenLocalDataSource.clearAllTokens()
-                userLocalDataSource.clearUserDetails()
-            }
+
+        tokenLocalDataSource.clearAllTokens()
+        userLocalDataSource.clearUserDetails()
+
+        return Result.success(Unit)
     }
 
     override suspend fun createAccount(
